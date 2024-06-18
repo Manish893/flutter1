@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "798101406714",
+    "project_id": "retry-e095a",
+    "storage_bucket": "retry-e095a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798101406714:android:5d32d7cb5edd382a72da43",
+        "android_client_info": {
+          "package_name": "com.nextstep.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXjgMTnpxAVeqyyZMeRIi7lg9q4lwHauw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
