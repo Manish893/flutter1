@@ -18,6 +18,13 @@ class LoginProvider extends ChangeNotifier {
   NetworkStatus get getsetNetworkstatus => _setNetworkstatus;
   String? errorMessage;
   bool isCheckRememberMe = false;
+  List<SignupModel> userList = [];
+  NetworkStatus _setDeleteStatus = NetworkStatus.idel;
+  NetworkStatus get getDeleteStatus => _setDeleteStatus;
+  setDeleteStatus(NetworkStatus status) {
+    _setDeleteStatus = status;
+    notifyListeners();
+  }
 
   setSaveCheckRememberMe(value) {
     isCheckRememberMe = value;
@@ -26,6 +33,7 @@ class LoginProvider extends ChangeNotifier {
 
   setLoading(NetworkStatus status) {
     _setNetworkstatus = status;
+    notifyListeners();
   }
 
   setVisibilityForPassword(bool value) {
@@ -71,10 +79,40 @@ class LoginProvider extends ChangeNotifier {
       await prefs.remove('password');
     }
   }
-   readRememberMe() async {
+
+  readRememberMe() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    email= prefs.getString('email')?? "";
+    email = prefs.getString('email') ?? "";
     password = prefs.getString('password') ?? "";
     notifyListeners();
+  }
+
+  getValueFromDataBase() async {
+    if (_setNetworkstatus != NetworkStatus.loading) {
+      setLoading(NetworkStatus.loading);
+    }
+    ApiResponse response = await apiService.getValue();
+    if (response.networkStatus == NetworkStatus.success) {
+      userList = response.data;
+      setLoading(NetworkStatus.success);
+    } else if (response.networkStatus == NetworkStatus.error) {
+      errorMessage = response.errorMessage;
+      setLoading(NetworkStatus.error);
+    }
+  }
+
+  deleteIdFromDataBase(String id) async {
+    if (_setDeleteStatus != NetworkStatus.loading) {
+      setDeleteStatus(NetworkStatus.loading);
+    }
+    ApiResponse response = await apiService.deleteID(id);
+    if (response.networkStatus == NetworkStatus.success) {
+      setDeleteStatus(NetworkStatus.success);
+    } else if (response.networkStatus == NetworkStatus.error) {
+      errorMessage = response.errorMessage;
+      setDeleteStatus(
+        NetworkStatus.error,
+      );
+    }
   }
 }

@@ -1,4 +1,5 @@
 class SignupModel {
+  String? _id;
   String? _fullName;
   String? _email;
   String? _address;
@@ -6,11 +7,15 @@ class SignupModel {
   String? _password;
 
   SignupModel(
-      {String? fullName,
+      {String? id,
+      String? fullName,
       String? email,
       String? address,
       int? phone,
       String? password}) {
+    if (id != null) {
+      this.id = id;
+    }
     if (fullName != null) {
       this._fullName = fullName;
     }
@@ -27,6 +32,8 @@ class SignupModel {
       this._password = password;
     }
   }
+  String? get id => _id;
+  set id(String? id) => _id = id;
 
   String? get fullName => _fullName;
   set fullName(String? fullName) => _fullName = fullName;
@@ -40,6 +47,7 @@ class SignupModel {
   set password(String? password) => _password = password;
 
   SignupModel.fromJson(Map<String, dynamic> json) {
+    _id = json["id"];
     _fullName = json['full_Name'];
     _email = json['email'];
     _address = json['address'];
@@ -49,6 +57,7 @@ class SignupModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this._id;
     data['full_Name'] = this._fullName;
     data['email'] = this._email;
     data['address'] = this._address;

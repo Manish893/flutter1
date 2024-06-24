@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:retryloginlogout/provider/loginProvider.dart';
 
 class Helper {
   static backDropFilter(context) {
@@ -32,5 +33,33 @@ class Helper {
 // Find the ScaffoldMessenger in the widget tree
 // and use it to show a SnackBar.
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+
+   static showErrorDialog(String message,context) {
+       showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Error"),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              
+              // Handle Yes action
+              Navigator.of(context).pop(); // Close the dialog
+            },
+            child: Text("Yes"),
+          ),
+          TextButton(
+            onPressed: () {
+              // Handle No action
+              Navigator.of(context).pop(); // Close the dialog
+            },
+            child: Text("No"),
+          ),
+        ],
+      ),
+    );
   }
 }
